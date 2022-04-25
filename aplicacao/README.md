@@ -48,3 +48,13 @@ rails db:reset
 rspec
 ```
 
+### Operação via Docker
+Criando a network
+
+```shell
+docker network create biblioteca-network
+```
+Iniciando o docker do app e do banco já com o Nginx
+```shell
+docker-compose up --build
+```

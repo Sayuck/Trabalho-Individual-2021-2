@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:1.15-alpine
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - aplication
+
+  aplication:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    volumes:
+      - ".:/app"
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13.2-alpine
+    env_file: .env
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+networks:
+  default:
+    external:
+      name: biblioteca-network
