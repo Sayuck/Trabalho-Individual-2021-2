@@ -2,24 +2,50 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Create network
-      working-directory: ./aplicacao
-      run: docker network create biblioteca-network
-      
-    - name: Run the aplication
-      working-directory: ./aplicacao
-      run: docker-compose up --build -d
+      - uses: actions/checkout@v3
+
+      - name: Create network
+        working-directory: ./aplicacao
+        run: docker network create biblioteca-network
+
+      - name: Run aplication
+        working-directory: ./aplicacao
+        run: docker-compose up --build -d
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create network
+        working-directory: ./aplicacao
+        run: docker network create biblioteca-network
+
+      - name: Run tests
+        working-directory: ./aplicacao
+        run: docker-compose run aplication bash -c "rails db:reset; rspec"
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create network
+        working-directory: ./aplicacao
+        run: docker network create biblioteca-network
+
+      - name: Lint
+        working-directory: ./aplicacao
+        run: docker-compose run aplication bash -c "gem install rubocop; rubocop -A --fail-level F"
