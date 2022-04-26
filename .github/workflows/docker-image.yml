@@ -21,7 +21,7 @@ jobs:
 
       - name: Lint
         working-directory: ./aplicacao
-        run: docker-compose run aplication bash -c "gem install rubocop; rubocop -A --fail-level F"
+        run: docker-compose run aplication bash -c "gem install rubocop; rubocop --fail-level F"
 
   test:
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./aplicacao
-        run: docker-compose run aplication bash -c "rails db:reset; rspec"
+        run: docker-compose run aplication bash -c "rails db:reset;rspec"
 
   build:
     runs-on: ubuntu-latest

@@ -27,6 +27,6 @@ jobs:
       - name: Build and push action
         uses: docker/build-push-action@v2
         with:
-          context: "{{defaultContext}}:aplicacao/docker"
+          context: "{{defaultContext}}:aplicacao"
           push: true
-          tags: sayuck/biblioteca-gces:latest
+          tags: sayuck/gcesbiblioteca:latest

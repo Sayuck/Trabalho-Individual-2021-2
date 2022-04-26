@@ -1,7 +1,7 @@
 FROM ruby:3.0.0
 
 RUN apt-get update && \
-        apt-get -y install curl && \
+        apt-get -qq -y install netcat-openbsd curl && \
         curl -sL https://deb.nodesource.com/setup_14.x | bash - &&\
         apt-get install -y nodejs
 

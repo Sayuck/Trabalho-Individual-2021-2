@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
   nginx:
@@ -13,7 +13,7 @@ services:
 
   aplication:
     build:
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
       context: .
     volumes:
       - ".:/app"
