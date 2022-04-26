@@ -1,6 +1,7 @@
 name: Docker Image CI
 
 on:
+  workflow_call:
   push:
     branches: [main]
   pull_request:
@@ -8,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,9 +19,9 @@ jobs:
         working-directory: ./aplicacao
         run: docker network create biblioteca-network
 
-      - name: Run aplication
+      - name: Lint
         working-directory: ./aplicacao
-        run: docker-compose up --build -d
+        run: docker-compose run aplication bash -c "gem install rubocop; rubocop -A --fail-level F"
 
   test:
     runs-on: ubuntu-latest
@@ -36,7 +37,7 @@ jobs:
         working-directory: ./aplicacao
         run: docker-compose run aplication bash -c "rails db:reset; rspec"
 
-  lint:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,6 +47,6 @@ jobs:
         working-directory: ./aplicacao
         run: docker network create biblioteca-network
 
-      - name: Lint
+      - name: Run aplication
         working-directory: ./aplicacao
-        run: docker-compose run aplication bash -c "gem install rubocop; rubocop -A --fail-level F"
+        run: docker-compose up --build -d
