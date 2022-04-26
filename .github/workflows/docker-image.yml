@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Create network
+      working-directory: ./aplicacao
+      run: docker network create biblioteca-network
+      
+    - name: Run the aplication
+      working-directory: ./aplicacao
+      run: docker-compose up --build -d
